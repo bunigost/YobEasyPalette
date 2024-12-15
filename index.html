@@ -1,302 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YEP - Retro Bright</title>
-    <style>
-        body {
-            font-family: 'Press Start 2P', cursive; /* Game Boy style font */
-            text-align: center;
-            margin: 20px;
-            background-color: #dad6d7; /* Light gray background */
-            color: #010105; /* Black text */
-        }
-
-        h1 {
-            color: #ad1035; /* Dark red for heading */
-            font-size: 72px;
-            font-weight: bold;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .left-panel, .right-panel {
-            background-color: #717286; /* Dark gray panel */
-            padding: 20px;
-            border-radius: 8px; /* Rounded corners */
-        }
-
-        canvas {
-            border: 2px solid #0f380f; /* Bright yellow border for canvas */
-            margin: 10px auto;
-            display: block;
-            image-rendering: pixelated;
-        }
-
-        .palette {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            border: 1px solid #010105; /* Border for palette */
-            padding: 10px;
-            border-radius: 4px; /* Slightly rounded corners */
-        }
-
-        .color-box {
-            width: 50px;
-            height: 50px;
-            margin: 0 5px;
-            border: 1px solid #010105; /* Black border around color boxes */
-            transition: transform 0.2s;
-        }
-
-        .color-box:hover {
-            transform: scale(1.1); /* Scale up on hover */
-        }
-
-        .instructions {
-            margin: 10px 0;
-            font-weight: bold;
-        }
-
-        .button-container {
-            margin-top: 20px; /* Added margin to separate buttons */
-        }
-
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #ad1035; /* Dark red background for buttons */
-            color: #fff; /* White text */
-            border: none;
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #ff4545; /* Lighter red on hover */
-        }
-
-        pre {
-            white-space: pre-wrap; /* Preserve whitespace */
-        }
-
-        .output-container {
-            background: #333; /* Dark background for output */
-            padding: 15px;
-            border-radius: 5px; /* Rounded corners for output */
-            margin-top: 20px; /* Spacing from other elements */
-        }
-
-        .layers-wrapper {
-            position: relative;
-            width: 320px; /* Updated width */
-            height: 288px; /* Updated height */
-        }
-
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            image-rendering: pixelated;
-            object-fit: contain;
-        }
-
-        .left-panel p {
-            font-size: 18px; /* Make the font size larger */
-            color: #010105; /* Black color for contrast */
-            margin-bottom: 10px; /* Space below the message */
-        }
-    </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"> <!-- Game Boy font -->
-</head>
-<body>
-    <h1>YEP</h1>
+    <title>YEP - Yob Easy Palette</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  </head>
+  <body>
+    <h1>Welcome to Yob Easy Palette!</h1>
     <div class="container">
-        <div class="left-panel">
-            <p>Upload your image:</p>
-            <input type="file" id="imageUploader" accept="image/*" />
-            <div>
-                <label for="scaleFactor">Scale: </label>
-                <select id="scaleFactor">
-                    <option value="1">x1</option>
-                    <option value="2" selected>x2</option>
-                    <option value="4">x4</option>
-                    <option value="8">x8</option>
-                    <option value="10">x10</option>
-                </select>
-            </div>
-            <canvas id="imageCanvas"></canvas>
-            <div class="instructions">Click on the canvas to select 4 colors.</div>
-            <div class="palette" id="palette"></div>
-            <pre id="output"></pre>
-            <div class="button-container">
-                <button id="clearPaletteBtn">Clear Palette</button>
-            </div>
+      <div class="left-panel">
+        <p>1. Click the button below to upload your image!</p>
+        <input type="file" id="imageUploader" class="file-upload" accept="image/*" />
+        <label for="imageUploader" class="file-upload-label">Browse Your Image</label>
+
+        <div class="slider-container">
+          <label for="scaleSlider">2. Adjust the scaling to your liking</label>
+          <div class="slider-controls">
+            <button id="decreaseScale" class="arrow-button">
+              <div class="arrow left-arrow"></div>
+            </button>
+            <input type="range" id="scaleSlider" class="slider" min="25" max="1000" value="200" step="25" />
+            <button id="increaseScale" class="arrow-button">
+              <div class="arrow right-arrow"></div>
+            </button>
+          </div>
+		  <span id="scaleValue">100%</span>
         </div>
 
-        <div class="right-panel">
-            <div class="layers-wrapper">
-                <canvas id="layer1" class="layer" width="320" height="288"></canvas>
-                <canvas id="layer2" class="layer" width="320" height="288"></canvas>
-                <canvas id="layer3" class="layer" width="320" height="288"></canvas>
-                <canvas id="layer4" class="layer" width="320" height="288"></canvas>
-            </div>
-            <div class="button-container">
-                <button id="previewBtn">Preview</button>
-            </div>
+        <canvas id="imageCanvas" class="dashed-border" style="display: none;"></canvas>
+        <div class="instructions" id="canvasInstructions">3. Click on the image to select up to 4 colors</div>
+        <div class="palette" id="palette"></div>
+        <div class="output-container">
+          <pre id="output"></pre>
         </div>
+<div class="button-container" id="buttonContainer" style="display: none;">
+    <button id="copyToClipboardBtn" data-button="A">
+        A
+        <span class="tooltip">Copy to Clipboard</span>
+    </button>
+    <button id="clearPaletteBtn" data-button="B">
+        B
+        <span class="tooltip">Clear Palette</span>
+    </button>
+</div>
+      </div>
+
+      <div class="right-panel">
+	  <p>Preview your custom palette on these amazing games!</p>
+        <div class="layers-wrapper">
+          <canvas id="layer1" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer2" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer3" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer4" class="layer" width="320" height="288"></canvas>
+        </div>
+
+        <!-- Image Picker Section -->
+       <div id="previewImages">
+    <div class="tooltip-container">
+        <img src="preview/_icons/aladdin.png" alt="Aladdin" data-folder="aladdin" class="preview-folder" />
+        <span class="tooltip">Aladdin</span> <!-- Tooltip for Aladdin -->
     </div>
-</body>
-</html>
-  <script>
-    const imageUploader = document.getElementById('imageUploader');
-    const scaleFactorSelect = document.getElementById('scaleFactor');
-    const canvas = document.getElementById('imageCanvas');
-    const ctx = canvas.getContext('2d');
-    const paletteDiv = document.getElementById('palette');
-    const output = document.getElementById('output');
-    const clearPaletteBtn = document.getElementById('clearPaletteBtn');
-    const previewBtn = document.getElementById('previewBtn');
-    const layers = [
-      document.getElementById('layer1'),
-      document.getElementById('layer2'),
-      document.getElementById('layer3'),
-      document.getElementById('layer4')
-    ];
+    <div class="tooltip-container">
+        <img src="preview/_icons/ducktales.png" alt="DuckTales" data-folder="ducktales" class="preview-folder" />
+        <span class="tooltip">Duck Tales</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/harvestmoon.png" alt="Harvest Moon" data-folder="harvestmoon" class="preview-folder" />
+        <span class="tooltip">Harvest Moon GB</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/kirby.png" alt="Kirby" data-folder="kirby" class="preview-folder" />
+        <span class="tooltip">Kirby's Dream Land</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/megaman.png" alt="Mega Man" data-folder="megaman" class="preview-folder" />
+        <span class="tooltip">Mega Man</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/mysticquest.png" alt="Mystic Quest" data-folder="mysticquest" class="preview-folder" />
+        <span class="tooltip">Final Fantasy Adventure</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/tetris.png" alt="Tetris" data-folder="tetris" class="preview-folder" />
+        <span class="tooltip">Tetris</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/yoshi.png" alt="Yoshi" data-folder="yoshi" class="preview-folder" />
+        <span class="tooltip">Yoshi</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/dkland.png" alt="Donkey Kong Land" data-folder="dkland" class="preview-folder" />
+        <span class="tooltip">Donkey Kong Land</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/f1.png" alt="F1" data-folder="f1" class="preview-folder" />
+        <span class="tooltip">F1</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/hermano.png" alt="Hermano" data-folder="hermano" class="preview-folder" />
+        <span class="tooltip">Hermano</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/mario.png" alt="Mario" data-folder="mario" class="preview-folder" />
+        <span class="tooltip">Super Mario Land</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/metroid.png" alt="Metroid" data-folder="metroid" class="preview-folder" />
+        <span class="tooltip">Metroid II: Return of Samus</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/pokemon.png" alt="Pokemon" data-folder="pokemon" class="preview-folder" />
+        <span class="tooltip">Pokemon Yellow</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/tloz.png" alt="The Legend of Zelda" data-folder="tloz" class="preview-folder" />
+        <span class="tooltip">TLoZ : Link's Awakening</span>
+    </div>
+    <div class="tooltip-container">
+        <img src="preview/_icons/bugsbunny.png" alt="Bugs Bunny" data-folder="bugsbunny" class="preview-folder" />
+        <span class="tooltip">The Bugs Bunny Crazy Castle</span>
+    </div>
+</div>
+      </div>
+    </div>
 
-    let selectedColors = [];
-    let filename = "palette";
-    let scaleFactor = 2;
-    let img = new Image();
+    <!-- Modal Structure -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="modalClose" class="modal-close">×</span>
+        <p id="modalMessage">This is a modal message!</p>
+        <button id="modalOkBtn">OK</button>
+      </div>
+    </div>
 
-    function rgbToGameBoy(r, g, b) {
-      return [Math.floor(r / 8), Math.floor(g / 8), Math.floor(b / 8)];
-    }
-
-    function updatePalette() {
-      paletteDiv.innerHTML = '';
-      const gbPalette = selectedColors.map(([r, g, b]) => rgbToGameBoy(r, g, b));
-
-      gbPalette.forEach(([r, g, b]) => {
-        const colorBox = document.createElement('div');
-        colorBox.className = 'color-box';
-        colorBox.style.backgroundColor = `rgb(${r * 8}, ${g * 8}, ${b * 8})`;
-        paletteDiv.appendChild(colorBox);
-      });
-
-      const flatPalette = gbPalette.flat();
-      output.textContent = `${filename}=${flatPalette.join(',')}`;
-    }
-
-    function drawImage() {
-      const tempCanvas = document.createElement('canvas');
-      const tempCtx = tempCanvas.getContext('2d');
-
-      tempCanvas.width = img.width;
-      tempCanvas.height = img.height;
-      tempCtx.drawImage(img, 0, 0);
-
-      canvas.width = img.width * scaleFactor;
-      canvas.height = img.height * scaleFactor;
-
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width, tempCanvas.height, 0, 0, canvas.width, canvas.height);
-    }
-
-    imageUploader.addEventListener('change', (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        selectedColors = [];
-        updatePalette();
-        filename = file.name.replace(/\.[^/.]+$/, "");
-
-        img = new Image();
-        img.onload = () => {
-          scaleFactor = parseInt(scaleFactorSelect.value);
-          drawImage();
-        };
-        img.src = URL.createObjectURL(file);
-      }
-    });
-
-    canvas.addEventListener('click', (event) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = Math.floor((event.clientX - rect.left) / scaleFactor);
-      const y = Math.floor((event.clientY - rect.top) / scaleFactor);
-
-      const pixel = ctx.getImageData(x * scaleFactor, y * scaleFactor, 1, 1).data;
-      const [r, g, b] = pixel;
-
-      if (selectedColors.length < 4) { // Limit to 4 colors
-        selectedColors.push([r, g, b]);
-        updatePalette();
-      } else {
-        alert('You can only select 4 colors!');
-      }
-    });
-
-    scaleFactorSelect.addEventListener('change', () => {
-      scaleFactor = parseInt(scaleFactorSelect.value);
-      if (img.src) {
-        drawImage();
-      }
-    });
-
-    clearPaletteBtn.addEventListener('click', () => {
-      selectedColors = [];
-      updatePalette();
-    });
-
-    function loadLayerImage(layerId, imageUrl) {
-      const layer = document.getElementById(layerId);
-      const layerImg = new Image();
-      layerImg.onload = () => {
-        layer.width = layerImg.width; // Only set dimensions from image
-        layer.height = layerImg.height;
-        const layerCtx = layer.getContext('2d');
-        layerCtx.drawImage(layerImg, 0, 0); // Draw the image
-      };
-      layerImg.src = `mario/${imageUrl}`; // Load image from "mario" folder
-    }
-
-    previewBtn.addEventListener('click', () => {
-      if (selectedColors.length === 4) {
-        // Apply the selected palette to the layers
-        layers.forEach((layer, index) => {
-          const [r, g, b] = selectedColors[index];
-          const ctx = layer.getContext('2d');
-          const imageData = ctx.getImageData(0, 0, layer.width, layer.height);
-
-          // Replace colors based on selected palette
-          for (let i = 0; i < imageData.data.length; i += 4) {
-            imageData.data[i] = r; // Red channel
-            imageData.data[i + 1] = g; // Green channel
-            imageData.data[i + 2] = b; // Blue channel
-          }
-
-          ctx.putImageData(imageData, 0, 0); // Update canvas with new image data
-        });
-      } else {
-        alert('Please select 4 colors first!');
-      }
-    });
-
-    // Load the layers from the "mario" folder
-    loadLayerImage('layer1', 'layer1.png');
-    loadLayerImage('layer2', 'layer2.png');
-    loadLayerImage('layer3', 'layer3.png');
-    loadLayerImage('layer4', 'layer4.png');
-  </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
