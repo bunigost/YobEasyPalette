@@ -226,11 +226,11 @@ h1 {
 }
 
 #ClickA .button-prompt:hover {
-    background-image: url('YEP/src/assets/buttons/a_pressed.png'); /* A button image */
+    background-image: url('/YEP/src/assets/buttons/a_pressed.png'); /* A button image */
 }
 
 #ClickB .button-prompt:hover {
-    background-image: url('YEP/src/assets/buttons/b_pressed.png'); /* B button image */
+    background-image: url('/YEP/src/assets/buttons/b_pressed.png'); /* B button image */
     transform: translateY(2px);
 }
 
