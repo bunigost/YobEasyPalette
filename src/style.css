@@ -1,14 +1,14 @@
 /* Custom fonts */
 @font-face {
     font-family: 'GameBoy1989'; /*Game Boy Color font */
-    src: url('/src/assets/fonts/game_boy_1989.ttf') format('truetype');
+    src: url('assets/fonts/game_boy_1989.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'DragonWarrior'; /*Game Boy Color font */
-    src: url('/src/assets/fonts/dragon-warrior-gbc.ttf') format('truetype');
+    src: url('assets/fonts/dragon-warrior-gbc.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -217,22 +217,7 @@ h1 {
     background-repeat: no-repeat;
 }
 
-#ClickA .button-prompt {
-    background-image: url('/src/assets/buttons/a.png'); /* A button image */
-}
 
-#ClickB .button-prompt {
-    background-image: url('/src/assets/buttons/b.png'); /* B button image */
-}
-
-#ClickA .button-prompt:hover {
-    background-image: url('/src/assets/buttons/a_pressed.png'); /* A button image */
-}
-
-#ClickB .button-prompt:hover {
-    background-image: url('/src/assets/buttons/b_pressed.png'); /* B button image */
-    transform: translateY(2px);
-}
 
 /* Output styles */
 
