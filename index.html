@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="/YEP/assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/YEP/assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/YEP/assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/YEP/assets/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/YEP/assets/favicon/site.webmanifest" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEP - Yob Easy Palette</title>
+    <link rel="stylesheet" href="/YEP/style.css">
+    <link rel="stylesheet" href="/YEP/slider.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+
+  </head>
+  
+  <body>
+    <h1>Welcome to YOB EASY PALETTE</h1>
+    <div class="container">
+      <div class="left-panel">
+        <!-- Button to upload image -->
+        <input type="file" id="imageUploader" class="file-upload" accept="image/*" />
+        <label for="imageUploader" class="file-upload-label">1. Browse...</label>
+
+        <!-- Uploaded Image Canvas -->
+        <canvas id="imageCanvas" class="dashed-border" style="display: none;"></canvas>
+        
+        <!-- Scale Slider -->
+        <div class="slider-container">
+          <label for="scaleSlider">2. Scale</label>
+          <div class="slider-controls">
+            <button id="decreaseScale" class="arrow-button">
+              <div class="arrow left-arrow"></div>
+            </button>
+            <input type="range" id="scaleSlider" class="slider" min="25" max="1000" value="200" step="25" />
+            <button id="increaseScale" class="arrow-button">
+              <div class="arrow right-arrow"></div>
+            </button>
+          </div>
+          <span id="scaleValue">100%</span>
+        </div>
+
+        <!-- Colors Selection -->
+        <div class="instructions" id="canvasInstructions">3. Select 4 colors</div>
+        <div class="palette" id="palette"></div>
+
+        <!-- Output -->
+        <div class="output-container">
+          <div id="output-wrapper">
+            <span id="output"></span>
+          </div>
+          <div class="footer">
+            <span id="ClickA">A : Copy to clipboard</span>
+            <span id="ClickB">B : Clear Palette</span>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-container" id="buttonContainer" style="display: none;">
+          <button id="copyToClipboardBtn" data-button="A">A</button>
+          <button id="clearPaletteBtn" data-button="B">B</button>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <p>Preview your custom palette on these amazing games!</p>
+        <div class="layers-wrapper">
+          <canvas id="layer1" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer2" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer3" class="layer" width="320" height="288"></canvas>
+          <canvas id="layer4" class="layer" width="320" height="288"></canvas>
+        </div>
+
+        <div id="previewImages">
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/aladdin.png" alt="Aladdin" data-folder="aladdin" class="preview-folder" />
+            <span class="tooltip">Aladdin</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/bugsbunny.png" alt="The Bugs Bunny Crazy Castle" data-folder="bugsbunny" class="preview-folder" />
+            <span class="tooltip">The Bugs Bunny Crazy Castle</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/dkland.png" alt="Donkey Kong Land" data-folder="dkland" class="preview-folder" />
+            <span class="tooltip">Donkey Kong Land</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/ducktales.png" alt="DuckTales" data-folder="ducktales" class="preview-folder" />
+            <span class="tooltip">Duck Tales</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/harvestmoon.png" alt="Harvest Moon GB" data-folder="harvestmoon" class="preview-folder" />
+            <span class="tooltip">Harvest Moon GB</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/tailgator.png" alt="Tail ''Gator" data-folder="tailgator" class="preview-folder" />
+            <span class="tooltip">Tail 'Gator'</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/kiddracula.png" alt="Kid Dracula" data-folder="kiddracula" class="preview-folder" />
+            <span class="tooltip">Kid Dracula</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/kirby.png" alt="Kirby's Dream Land" data-folder="kirby" class="preview-folder" />
+            <span class="tooltip">Kirby's Dream Land</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/mario.png" alt="Super Mario Land" data-folder="mario" class="preview-folder" />
+            <span class="tooltip">Super Mario Land</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/megaman.png" alt="Mega Man" data-folder="megaman" class="preview-folder" />
+            <span class="tooltip">Mega Man</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/metroid.png" alt="Metroid II: Return of Samus" data-folder="metroid" class="preview-folder" />
+            <span class="tooltip">Metroid II: Return of Samus</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/ffadventure.png" alt="Final Fantasy Adventure" data-folder="ffadventure" class="preview-folder" />
+            <span class="tooltip">Final Fantasy Adventure</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/pokemon.png" alt="Pokemon" data-folder="pokemon" class="preview-folder" />
+            <span class="tooltip">Pokemon</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/tetris.png" alt="Tetris" data-folder="tetris" class="preview-folder" />
+            <span class="tooltip">Tetris</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/zelda.png" alt="TLoZ : Link's Awakening" data-folder="zelda" class="preview-folder" />
+            <span class="tooltip">TLoZ : Link's Awakening</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/tripworld.png" alt="Trip World" data-folder="tripworld" class="preview-folder" />
+            <span class="tooltip">Trip World</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/vrally.png" alt="V-Rally" data-folder="vrally" class="preview-folder" />
+            <span class="tooltip">V-Rally</span>
+          </div>
+          <div class="tooltip-container">
+            <img src="/YEP/assets/preview/_icons64/yoshi.png" alt="Yoshi" data-folder="yoshi" class="preview-folder" />
+            <span class="tooltip">Yoshi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Structure -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span id="modalClose" class="modal-close">×</span>
+          <p id="modalMessage">This is a modal message!</p>
+          <button id="modalOkBtn">OK</button>
+        </div>
+      </div>
+
+    <script src="/YEP/script.js"></script>
+  </body>
+</html>
+
