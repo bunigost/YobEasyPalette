@@ -1,14 +1,14 @@
 /* Custom fonts */
 @font-face {
     font-family: 'GameBoy1989'; /*Game Boy Color font */
-    src: url('assets/fonts/game_boy_1989.ttf') format('truetype');
+    src: url('/YEP/assets/fonts/game_boy_1989.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'DragonWarrior'; /*Game Boy Color font */
-    src: url('assets/fonts/dragon-warrior-gbc.ttf') format('truetype');
+    src: url('/YEP/assets/fonts/dragon-warrior-gbc.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
