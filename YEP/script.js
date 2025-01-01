@@ -217,7 +217,7 @@ function loadImagesForPreview(selectedPreview, callback) {
     let imagesLoaded = 0; // Count loaded images
 
     images.forEach((layer, index) => {
-        const imageUrl = `/YEP/assets/preview/${selectedPreview}/${layer}`;
+        const imageUrl = `YEP/assets/preview/${selectedPreview}/${layer}`;
         console.debug(`Initiating load for layer${index + 1} from: ${imageUrl}`);
         
         loadLayerImage(`layer${index + 1}`, imageUrl, () => {
