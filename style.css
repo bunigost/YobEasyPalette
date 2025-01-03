@@ -13,14 +13,20 @@
     font-style: normal;
 }
 
-
-
-/* General styles for the body */
+/* General style for the body */
 body {
     font-family: 'Arial', sans-serif;
     text-align: center;
     margin: 10px;
     background-color: #e7e6e2; /* GB white-ish body color */
+}
+
+/* Things initially hidden */
+#uploadCanvas,
+#sliderContainer,
+#selectColors,
+#outputSection {
+    display: none;
 }
 
 /* Style for "Welcome to YEP" */
@@ -41,81 +47,68 @@ h1 {
     margin: 0 auto;
 }
 
-/* Styles for both left and right panels */
+/* style for both left and right panels */
 .left-panel, .right-panel {
     background-color: #73738a; /* GB bezel color */
     padding: 20px;
     border-radius: 25px;
     border: 3px solid #72737d; /* GB bezel border color */
     flex: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* File Upload Button */
-.file-upload {
+/* Hide default File Upload button */
+#browseButton {
     display: none;
 }
 
-.file-upload-label {
+/* Buttons */
+#file-upload-label,
+.slider-container label,
+.select-colors,
+.preview {
     display: inline-block;
     background-color: #b30f42; /* GB buttons color */
-	font-family: 'Press Start 2P', cursive;
+	font-family: 'DragonWarrior', cursive;
+    font-weight: bold;
     color: #e7e6e2;
     padding: 10px;
     border-radius: 15px;
 	border: 2px ridge #e7e6e2;
     cursor: pointer;
-	transition: background-color 0.2s;
     margin: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+	transition: background-color 0.2s, transform 0.2s;
 }
 
-.file-upload-label:hover {
+#file-upload-label:hover {
 	background-color: #c91252;
+    transform: scale(1.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.file-upload-label:active {
+#file-upload-label:active {
     background-color: #a30b3b;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 	border: 2px groove #e7e6e2;
+    transform: scale(1)
 }
 
 .left-panel {
     position: relative;
 }
 
-.left-panel canvas {
+/* Uploaded image canvas style */
+#uploadCanvas {
     position: relative;
     border-radius: 5px;
-    margin: 10px auto;
-    display: block;
+    margin: 10px auto 20px auto;
     image-rendering: pixelated;
-	border: 2px solid #9A9E3F; /* GB screen color */
-    box-shadow: 0 0 0 2px #1E2F19; /* GB screen border color */
+	border: 1px dashed black;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Instructions 3. text style */
-.instructions {
-	display: none;
-	background-color: #b30f42; /* GB buttons color */
-	font-family: 'Press Start 2P', cursive;
-	color: #e7e6e2;
-	padding: 10px;
-	border-radius: 15px;
-	border: 2px ridge #e7e6e2;
-	margin: auto;
-	max-width: 300px;
-	text-align: center;
-	line-height: 1.2; /* Adjust as necessary for density */
-}
-
-/* Palette and buttons initially hidden */
-.palette, .button-container, .slider-container {
-    display: none;
-}
-
-
-/* Styles for color palette */
-.palette {
+/* Palette container style */
+#paletteContainer {
     justify-content: center;
     margin: 10px;
     padding: 10px;
@@ -123,18 +116,18 @@ h1 {
     flex-wrap: wrap;
 }
 
-/* Individual color box styles */
+/* Individual color box style */
 .color-box {
     width: 64px;
     height: 64px;
     margin: 0 10px;
-    border-radius: 15px;
+    border-radius: 40px;
     position: relative;
     overflow: hidden;
     transition: transform 0.2s, border 0.5s, box-shadow 0.4s;
     cursor: pointer;
-    border: 2px solid rgba(60, 60, 60, 1);
-    box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid grey;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Hover effect for color boxes */
@@ -142,7 +135,7 @@ h1 {
     border: solid 2px rgba(255, 0, 0, 1);
 }
 
-/* Red overlay style */
+/* Red overlay */
 .color-box::after {
     content: '';
     position: absolute;
@@ -160,7 +153,8 @@ h1 {
     opacity: 1;
 }
 
-/* Output styles */
+
+/* Output style */
 .output-container {
     font-family: 'DragonWarrior';
     color: #202c0c; /* DMG palette dark color */  
@@ -170,146 +164,111 @@ h1 {
     padding: 20px;
     border-radius: 3px;
     border: 2px solid #1E2F19; /* GB screen border */
-    margin: auto;
+    margin: 30px auto 10px auto;  /* top, right, bottom, left */
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 #output-wrapper {
     flex-grow: 1;
-    max-height: 100px;
+    max-height: 290px;
     text-align: center;
+    overflow: auto;
+    border: solid 2px #1E2F19;
+    padding: 10px;
 }
 
-#output {
+#output-text {
     flex-grow: 1;
-    text-align: center;
-    overflow-wrap: break-word;
-    font-size: 20px;
-    min-height: 40px;
-    max-height: 100px;
-    margin: 10px 0;
-    font-weight: bold;
+    overflow-wrap: anywhere;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
-.footer {
+.output-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-top: 10px;
     margin-top: auto;
 }
 
-#ClickA,
-#ClickB {
-    font-size: 10px;
-    margin: 2px;
-    display: flex;
-    align-items: center;
+.output-footer span {
+    text-align : left;
+    font-size: 12px;
+    margin-left: 20px;
 }
 
-.button-prompt {
-    display: inline-block;
-    width: 32px; /* Adjust the size as necessary */
-    height: 32px; /* Adjust the size as necessary */
-    margin-right: 3px; /* Space between the image and text */
-    background-size: contain;
+#ClickA {
+    background-image: url('/YobEasyPalette/assets/buttons/a.png');
     background-repeat: no-repeat;
+    background-size: cover;
+    width: 55px;
+    height: 32px;
 }
 
-
-
-/* Output styles */
-
-
-/* Button container styles */
-.button-container {
-    display: flex; /* Align buttons in a row */
-    justify-content: center; /* Center buttons horizontally */
-    gap: 10px; /* Add space between buttons */
+#ClickA:hover {
+    background-image:url('/YobEasyPalette/assets/buttons/a_pressed.png');
+    transform: translateY(1px);
+    cursor: pointer;
 }
 
-/* Game Boy-style button styles */
-.button-container button {
-    padding: 10px; /* Padding for button */
-    font-size: 16px; /* Font size of text */
-    color: #E5E5E5; /* Light text color */
-    background-color: #A5074B; /* Dark button background */
-    border: 2px solid #cdcdcd; /* Border color */
-    border-radius: 25px; /* Rounded edges */
-    cursor: pointer; /* Pointer cursor on hover */
-    width: 50px; /* Fixed width for buttons */
-    height: 50px; /* Fixed height for buttons */
-    outline: none; /* Remove outline */
-    transition: background-color 0.3s, transform 0.1s; /* Smooth transition for background and transform */
+#ClickB {
+    background-image: url('/YobEasyPalette/assets/buttons/b.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 55px;
+    height: 32px;
 }
 
-/* Button hover effect */
-.button-container button:hover {
-    background-color: #ff4545; /* Lighter red on hover */
+#ClickB:hover {
+    background-image:url('/YobEasyPalette/assets/buttons/b_pressed.png');
+    transform: translateY(1px);
+    cursor: pointer;
 }
 
-/* Button active (pressed) effect */
-.button-container button:active {
-    transform: translateY(2px); /* Move the button down */
-    background-color: #8b0031; /* Darken background when pressed */
-}
-
-/* Specific styling for button A */
-#copyToClipboardBtn {
-    background: #A5074B; /* Color for A button */
-}
-
-/* Specific styling for button B */
-#clearPaletteBtn {
-    background: #A5074B; /* Color for B button */
-}
-
-
-
-/* Styles specifically for canvases in the right panel */
+/* style specifically for canvases in the right panel */
 .right-panel canvas {
     border: 2px solid #9A9E3F; /* GB screen color */
     box-shadow: 0 0 0 2px #1E2F19; /* GB screen border 5 color */
     border-radius: 2px;
     margin: 10px auto;
-    display: block; /* Block display for positioning */
-    image-rendering: pixelated; /* Ensure pixelated rendering */
+    display: block;
+    image-rendering: pixelated;
 }
 
 
 /* Container for the layers */
 .layers-wrapper {
-    position: relative; /* Position relative for absolute children */
-    width: 320px; /* Fixed width for layer container */
-    height: 288px; /* Fixed height for layer container */
+    position: relative;
+    width: 320px;
+    height: 288px;
     margin: 0 auto;
 }
 
 /* Style for each individual layer */
 .layer {
-    position: absolute; /* Absolute positioning for overlapping layers */
-    top: 0; /* Align to top */
-    left: 0; /* Align to left */
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     image-rendering: pixelated;
-    object-fit: contain; /* Contain within the defined dimensions */
+    object-fit: contain;
 }
 
 
-/* Icon selection styles */
+/* Icon selection style */
 #previewImages {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping of icons */
-    justify-content: space-between; /* Space between columns of icons */
-    margin-top: 20px; /* Margin above the icons */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-/* Individual icon styles in the preview */
+/* Individual icon style in the preview */
 #previewImages img {
-    width: 64px; /* Width for icons */
-    height: 64px; /* Height for icons */
+    width: 64px; /* Width */
+    height: 64px; /* Height */
 	image-rendering: pixelated;
     border: 4px solid #1E2F19; /* GB screen border 5 */
     border-radius: 25%;
@@ -323,99 +282,95 @@ h1 {
 }
 
 
-
-
 /* Tooltip container style */
 .tooltip-container {
-    position: relative; /* Positioning context for the tooltip */
-    display: inline-block; /* Keep it inline */
+    position: relative;
+    display: inline-block;
 }
 
-/* Tooltip styles */
+/* Tooltip style */
 .tooltip {
-    visibility: hidden; /* Hide by default */
-    width: 120px; /* Set width for tooltip */
+    visibility: hidden;
+    width: 120px;
     background-color: rgba(0, 0, 0, 0.8); /* Dark background */
     color: #fff; /* Light text */
 	font-size: 12px;
-	font-family: 'Press Start 2P';
-    text-align: center; /* Center text */
-    border-radius: 6px; /* Rounded corners */
-    padding: 5px; /* Padding inside tooltip */
-    position: absolute; /* Position relative to the container */
+	font-family: 'DragonWarrior';
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
     z-index: 1; /* On top of other elements */
-    bottom: 125%; /* Place above the image */
-    left: 50%; /* Center horizontally */
-    margin-left: -60px; /* Center correction */
-    opacity: 0; /* Start invisible */
-    transition: opacity 0.3s; /* Fade-in effect */
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 /* Show tooltip on hover */
 .tooltip-container:hover .tooltip {
-    visibility: visible; /* Show the tooltip */
-    opacity: 1; /* Fade in */
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Show tooltip on hover */
 .button-container button:hover .tooltip {
-    visibility: visible; /* Show tooltip */
-    opacity: 1; /* Fade in */
+    visibility: visible;
+    opacity: 1;
 }
 
 
 
-
-
-/* Modal Styles */
+/* Modal style */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0; /* Align to left */
-    top: 0; /* Align to top */
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
 }
 
-/* Modal content styles */
+/* Modal content style */
 .modal-content {
-    background-color: #fefefe; /* Light grey background for modal */
-    margin: 15% auto; /* Center modal with margin from the top */
-    padding: 20px; /* Padding inside modal */
-    border: 1px solid #888; /* Light grey border for modal */
-    width: 80%; /* Full width of modal */
-    max-width: 500px; /* Maximum responsive width */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    background-color: #fefefe; /* Light grey background */
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888; /* Light grey border */
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Close button styles in modal */
+/* Close button style in modal */
 .modal-close {
-    color: #aaa; /* Light grey color for close button */
-    float: right; /* Align to right */
-    font-size: 28px; /* Font size for close button */
-    font-weight: bold; /* Bold weight for close button */
+    color: #aaa; /* Light grey color */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 /* Hover effect for close button */
 .modal-close:hover,
 .modal-close:focus {
-    color: black; /* Change color on hover */
-    text-decoration: none; /* No underline */
-    cursor: pointer; /* Pointer cursor on hover */
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* OK button in modal */
 #modalOkBtn {
     background-color: #ad1035; /* Same bright red as main buttons */
     color: white; /* White text color */
-    padding: 10px 15px; /* Padding inside button */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Hover effect for OK button */
@@ -423,13 +378,13 @@ h1 {
     background-color: #ff4545; /* Lighter red on hover */
 }
 
-/* Responsive styles for larger screens */
+/* Responsive style for larger screens */
 @media (min-width: 600px) {
     .container {
         flex-direction: row; /* Arrange children side by side on larger screens */
     }
 }
-/* Responsive styles for small screens */
+/* Responsive style for small screens */
 @media (max-width: 600px) {
     h1 {
         font-size: 36px; /* Smaller size for heading on mobile */
