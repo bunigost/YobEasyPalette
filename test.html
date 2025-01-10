@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with Zoom</title>
+    <style>
+        #uploadCanvas {
+            border: 1px solid #ccc;
+            cursor: crosshair;
+            display: none; /* Initially hidden */
+        }
+        #sliderContainer {
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+
+    <input type="file" id="imageUploader" accept="image/*">
+    <div id="sliderContainer">
+        <!-- Slider or any additional controls can go here -->
+    </div>
+    <canvas id="uploadCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('uploadCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const imageUploader = document.getElementById('imageUploader');
+        const scaleFactor = 1.1; // Scaling factor for zoom
+        let scale = 100; // Percentage scale for image
+        let img = new Image();
+        let x = 0; // X translation
+        let y = 0; // Y translation
+
+        // Event listener for image upload
+        imageUploader.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                img = new Image();
+                img.onload = () => {
+                    // Check if the image width exceeds the maximum width (520px)
+                    if (img.width > 520) {
+                        alert('Image width exceeds the maximum allowed size of 520px.'); // Show modal or alert
+                        return; // Prevent further processing of the image
+                    }
+                    canvas.style.display = 'block'; // Show the uploaded image canvas 
+                    sliderContainer.style.display = 'block'; // Show slider
+                    drawImage(); // Draw the image after it has loaded
+                };
+                img.src = URL.createObjectURL(file);
+            }
+        });
+
+        // Function to draw the uploaded image on the canvas
+        function drawImage() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const scaledWidth = img.width * (scale / 100);
+            const scaledHeight = img.height * (scale / 100);
+
+            // Set canvas size to the currently scaled image size
+            canvas.width = window.innerWidth; // Keep the canvas full screen width
+            canvas.height = window.innerHeight; // Keep the canvas full screen height
+            
+            // Draw image at its scaled size considering translation (x, y)
+            ctx.drawImage(img, 0, 0, img.width, img.height, x, y, scaledWidth, scaledHeight);
+        }
+
+        // Zoom functionality
+        canvas.addEventListener('wheel', function(event) {
+            event.preventDefault(); // Prevent page scrolling
+            const mouseX = event.offsetX;
+            const mouseY = event.offsetY;
+
+            // Calculate the new scale
+            if (event.deltaY < 0) {
+                scale *= scaleFactor; // Zoom in
+            } else {
+                scale /= scaleFactor; // Zoom out
+            }
+
+            // Maintain mouse position
+            x = mouseX - ((mouseX - x) * (scaleFactor - 1));
+            y = mouseY - ((mouseY - y) * (scaleFactor - 1));
+
+            drawImage();
+        });
+
+        // Panning function
+        canvas.addEventListener('mousedown', function(event) {
+            const startX = event.offsetX;
+            const startY = event.offsetY;
+
+            function mouseMoveHandler(e) {
+                x += e.offsetX - startX;
+                y += e.offsetY - startY;
+                drawImage();
+            }
+
+            function mouseUpHandler() {
+                canvas.removeEventListener('mousemove', mouseMoveHandler);
+                canvas.removeEventListener('mouseup', mouseUpHandler);
+            }
+
+            canvas.addEventListener('mousemove', mouseMoveHandler);
+            canvas.addEventListener('mouseup', mouseUpHandler);
+        });
+
+    </script>
+
+</body>
+</html>

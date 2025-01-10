@@ -54,7 +54,7 @@ h1 {
     border-radius: 25px;
     border: 3px solid #72737d; /* GB bezel border color */
     flex: 1;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 }
 
 /* Hide default File Upload button */
@@ -77,14 +77,14 @@ h1 {
 	border: 2px ridge #e7e6e2;
     cursor: pointer;
     margin: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 	transition: background-color 0.2s, transform 0.2s;
 }
 
 #file-upload-label:hover {
 	background-color: #c91252;
     transform: scale(1.1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 }
 
 #file-upload-label:active {
@@ -104,7 +104,7 @@ h1 {
     margin: 10px auto 20px auto;
     image-rendering: pixelated;
 	border: 1px dashed black;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 }
 
 /* Palette container style */
@@ -124,10 +124,10 @@ h1 {
     border-radius: 40px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.2s, border 0.5s, box-shadow 0.4s;
+    transition: border 0.3s;
     cursor: pointer;
-    border: 2px solid grey;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 2px dashed grey;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 }
 
 /* Hover effect for color boxes */
@@ -167,7 +167,7 @@ h1 {
     margin: 30px auto 10px auto;  /* top, right, bottom, left */
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
 }
 
 #output-wrapper {
@@ -226,7 +226,7 @@ h1 {
     cursor: pointer;
 }
 
-/* style specifically for canvases in the right panel */
+/* style for left panel canvas */
 .right-panel canvas {
     border: 2px solid #9A9E3F; /* GB screen color */
     box-shadow: 0 0 0 2px #1E2F19; /* GB screen border 5 color */
@@ -236,13 +236,17 @@ h1 {
     image-rendering: pixelated;
 }
 
+.shadow {
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5);
+}
 
 /* Container for the layers */
 .layers-wrapper {
     position: relative;
     width: 320px;
     height: 288px;
-    margin: 0 auto;
+    margin: 10px auto 40px auto;
+    
 }
 
 /* Style for each individual layer */
@@ -258,29 +262,62 @@ h1 {
 
 
 /* Icon selection style */
-#previewImages {
+#previewIcons {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 20px;
+    position: relative;
 }
 
 /* Individual icon style in the preview */
-#previewImages img {
+#previewIcons img {
     width: 64px; /* Width */
     height: 64px; /* Height */
-	image-rendering: pixelated;
-    border: 4px solid #1E2F19; /* GB screen border 5 */
-    border-radius: 25%;
-    transition: border-color 0.3s;
+    image-rendering: pixelated;
+    border: 2px solid rgba(154, 158, 63, 1);
+    border-radius: 50%; /* Circular border */
     margin: 5px; /* Margin for spacing between icons */
+    background-color: #1E2F19;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s; /* Smooth transition for color change */
+    position: relative; /* This allows children to position absolutely within it */
+}
+
+/* Loader (spinning dash) style */
+.loader {
+    width: 80px; /* Match the size of the icon */
+    height: 80px; /* Match the size of the icon */
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border-radius: 50%;
+    background: 
+        radial-gradient(farthest-side, #B2B649 94%, #0000) top/8px 8px no-repeat,
+        conic-gradient(#0000 30%, #B2B649);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    animation: l13 1s infinite linear;
+    display: flex; /* Enable flexbox for centering */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    opacity: 0;
+}
+
+/* Show loader only on hover */
+.tooltip-container:hover .loader {
+    opacity: 1; /* Make loader visible */
+    visibility: visible; /* Make sure it is visible */
+}
+
+/* Keyframes for spinning effect */
+@keyframes l13 { 
+    100% { transform: rotate(1turn); }
 }
 
 /* Hover effect for icons */
-#previewImages img:hover {
-    border-color: #9A9E3F; /* Change border color to light green on hover*/
+#previewIcons img:hover {
+    border: 2px solid rgba(154, 158, 63, 1); /* Change border color to light green on hover */
+    cursor: pointer;
 }
-
 
 /* Tooltip container style */
 .tooltip-container {
@@ -313,13 +350,6 @@ h1 {
     visibility: visible;
     opacity: 1;
 }
-
-/* Show tooltip on hover */
-.button-container button:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
 
 
 /* Modal style */

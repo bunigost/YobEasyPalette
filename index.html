@@ -58,17 +58,12 @@
             <span>Clear Palette</span>
           </div>
         </div>
-
-        <!-- Old Buttons, hidden because deleting breaks everything -->
-        <div class="button-container" id="buttonContainer" style="display: none;">
-          <button id="copyToClipboardBtn" data-button="A">A</button>
-          <button id="clearPaletteBtn" data-button="B">B</button>
-        </div>
       </div>
 
       <div class="right-panel">
-        <!-- Preview section -->
+        <!-- Preview canvas -->
         <div class="preview">4. See your palette</div>
+
         <div class="layers-wrapper">
           <canvas id="layer1" class="layer" width="320" height="288"></canvas>
           <canvas id="layer2" class="layer" width="320" height="288"></canvas>
@@ -76,104 +71,122 @@
           <canvas id="layer4" class="layer" width="320" height="288"></canvas>
         </div>
 
-        <div id="previewImages">
+<div id="previewIcons">
+    <div class="tooltip-container">
+  <div class="loader"></div>
+        <img src="/YobEasyPalette/assets/icons64/aladdin.png" alt="Aladdin" data-folder="aladdin" class="preview-folder" />
+        <span class="tooltip">Aladdin</span>
+    </div>
+    <div class="tooltip-container">
+  <div class="loader"></div>
+        <img src="/YobEasyPalette/assets/icons64/alleyway.png" alt="Alleyway" data-folder="alleyway" class="preview-folder" />
+        <span class="tooltip">Alleyway</span>
+    </div>
 
           <div class="tooltip-container">
-            <img src="/YobEasyPalette/assets/icons64/aladdin.png" alt="Aladdin" data-folder="aladdin" class="preview-folder" />
-            <span class="tooltip">Aladdin</span>
-          </div>
-
-          <div class="tooltip-container">
-            <img src="/YobEasyPalette/assets/icons64/alleyway.png" alt="Alleyway" data-folder="alleyway" class="preview-folder" />
-            <span class="tooltip">Alleyway</span>
-          </div>
-
-          <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/dkland.png" alt="Donkey Kong Land" data-folder="dkland" class="preview-folder" />
             <span class="tooltip">Donkey Kong Land</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/ffadventure.png" alt="Final Fantasy Adventure" data-folder="ffadventure" class="preview-folder" />
             <span class="tooltip">Final Fantasy Adventure</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/gradius.png" alt="Gradius" data-folder="gradius" class="preview-folder" />
             <span class="tooltip">Gradius</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/harvestmoon.png" alt="Harvest Moon GB" data-folder="harvestmoon" class="preview-folder" />
             <span class="tooltip">Harvest Moon GB</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/isss.png" alt="International Superstar Soccer" data-folder="isss" class="preview-folder" />
             <span class="tooltip">International Superstar Soccer</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/kiddracula.png" alt="Kid Dracula" data-folder="kiddracula" class="preview-folder" />
             <span class="tooltip">Kid Dracula</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/kirby.png" alt="Kirby's Dream Land" data-folder="kirby" class="preview-folder" />
             <span class="tooltip">Kirby's Dream Land</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/legendriverking.png" alt="Legend of the River King" data-folder="legendriverking" class="preview-folder" />
             <span class="tooltip">Legend of the River King</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/megaman.png" alt="Mega Man" data-folder="megaman" class="preview-folder" />
             <span class="tooltip">Mega Man</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/metroid.png" alt="Metroid II: Return of Samus" data-folder="metroid" class="preview-folder" />
             <span class="tooltip">Metroid II: Return of Samus</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/pokemon.png" alt="Pokemon" data-folder="pokemon" class="preview-folder" />
             <span class="tooltip">Pokemon</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/rtype.png" alt="R-Type" data-folder="rtype" class="preview-folder" />
             <span class="tooltip">R-Type</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/mario.png" alt="Super Mario Land" data-folder="mario" class="preview-folder" />
             <span class="tooltip">Super Mario Land</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/tetris.png" alt="Tetris" data-folder="tetris" class="preview-folder" />
             <span class="tooltip">Tetris</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/zelda.png" alt="TLoZ : Link's Awakening" data-folder="zelda" class="preview-folder" />
             <span class="tooltip">TLoZ : Link's Awakening</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/tripworld.png" alt="Trip World" data-folder="tripworld" class="preview-folder" />
             <span class="tooltip">Trip World</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/vrally.png" alt="V-Rally" data-folder="vrally" class="preview-folder" />
             <span class="tooltip">V-Rally</span>
           </div>
 
           <div class="tooltip-container">
+  <div class="loader"></div>
             <img src="/YobEasyPalette/assets/icons64/yoshi.png" alt="Yoshi" data-folder="yoshi" class="preview-folder" />
             <span class="tooltip">Yoshi</span>
           </div>

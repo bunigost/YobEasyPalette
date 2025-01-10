@@ -288,3 +288,30 @@ function generatePreview() {
     }
 }
 
+
+
+// Add an event listener for mouse wheel scrolling
+canvas.addEventListener('wheel', (event) => {
+    event.preventDefault(); // Prevent default scrolling behavior
+
+    const scaleChange = event.deltaY > 0 ? -100 : 100; // Scale factor increment/decrement
+    const newScaleFactor = scaleFactor + scaleChange; // Calculate new scale factor
+
+    // Calculate the new dimensions based on the new scale factor
+    const newWidth = img.width * (newScaleFactor / 100);
+    const newHeight = img.height * (newScaleFactor / 100);
+
+    // Ensure the new dimensions are not less than 10px
+    if (newWidth >= 100 && newHeight >= 100) {
+        scaleFactor = newScaleFactor; // Update scale factor
+        scaleSlider.value = scaleFactor; // Update the slider value
+        scaleValue.textContent = `${scaleFactor}%`; // Update the displayed scale
+
+        drawImage(); // Redraw the image with the new scale
+    } else if (newWidth < 100 || newHeight < 100) {
+;
+    }
+});
+
+// The rest of your existing code...
+
