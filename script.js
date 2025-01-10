@@ -45,6 +45,20 @@ imageUploader.addEventListener('change', (event) => {
                 showModal('Image width exceeds the maximum allowed size of 520px.');
                 return; // Prevent further processing of the image
             }
+
+            // If img is less than 32px, set to 32px
+            if (img.width < 32 || img.height < 32) {
+                // Create a temporary canvas for resizing
+                const resizedCanvas = document.createElement('canvas');
+                resizedCanvas.width = 32;
+                resizedCanvas.height = 32;
+                const resizedCtx = resizedCanvas.getContext('2d');
+
+                resizedCtx.imageSmoothingEnabled = false; // Disable image smoothing
+                resizedCtx.drawImage(img, 0, 0, 32, 32); // Draw to resized canvas
+                img = resizedCanvas; // Update img to be the resized image
+            }
+
             canvas.style.display = 'block'; // Show the uploaded image canvas 
             sliderContainer.style.display = 'block'; // Show slider
             drawImage(); // Draw the image after it has loaded
@@ -70,7 +84,6 @@ function drawImage() {
     ctx.imageSmoothingEnabled = false; // Disable image smoothing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(tempCanvas, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
-
 }
 
 // Function to update the color palette
@@ -288,30 +301,23 @@ function generatePreview() {
     }
 }
 
-
-
-// Add an event listener for mouse wheel scrolling
+// Event listener for mouse wheel scrolling
 canvas.addEventListener('wheel', (event) => {
     event.preventDefault(); // Prevent default scrolling behavior
 
     const scaleChange = event.deltaY > 0 ? -100 : 100; // Scale factor increment/decrement
-    const newScaleFactor = scaleFactor + scaleChange; // Calculate new scale factor
-
-    // Calculate the new dimensions based on the new scale factor
+    const newScaleFactor = scaleFactor + scaleChange; 
     const newWidth = img.width * (newScaleFactor / 100);
     const newHeight = img.height * (newScaleFactor / 100);
 
-    // Ensure the new dimensions are not less than 10px
-    if (newWidth >= 100 && newHeight >= 100) {
-        scaleFactor = newScaleFactor; // Update scale factor
-        scaleSlider.value = scaleFactor; // Update the slider value
-        scaleValue.textContent = `${scaleFactor}%`; // Update the displayed scale
+    if (newWidth >= 32 && newHeight >= 32) {
+        scaleFactor = newScaleFactor;
+        scaleSlider.value = scaleFactor;
+        scaleValue.textContent = `${scaleFactor}%`;
 
-        drawImage(); // Redraw the image with the new scale
-    } else if (newWidth < 100 || newHeight < 100) {
+        drawImage();
+    } else if (newWidth < 32 || newHeight < 32) {
 ;
     }
 });
-
-// The rest of your existing code...
 
